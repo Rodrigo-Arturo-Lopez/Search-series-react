@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useEffect, useRef, useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
+import Shows from './Shows'
 
 const url = 'https://api.tvmaze.com'
 // const showSearch = '/search/shows?q='
@@ -8,7 +9,7 @@ const url = 'https://api.tvmaze.com'
 const Navbar = () => {
   const searchRef = useRef(null)
   const [shows, setShows] = useState([])
-  const [query, setQuery] = useState('')
+  const [query, setQuery] = useState('spiderman')
 
   const getShows = async (query) => {
     return await axios.get(`${url}/search/shows?q=${query}`)
@@ -76,6 +77,7 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
+      <Shows data={shows} />
     </>
   )
 }
