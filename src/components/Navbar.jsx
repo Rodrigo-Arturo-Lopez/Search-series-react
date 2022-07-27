@@ -1,13 +1,35 @@
-import { useRef } from 'react'
+import axios from 'axios'
+import { useEffect, useRef, useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
+
+const url = 'https://api.tvmaze.com'
+// const showSearch = '/search/shows?q='
 
 const Navbar = () => {
   const searchRef = useRef(null)
+  const [shows, setShows] = useState([])
+  const [query, setQuery] = useState('')
+
+  const getShows = async (query) => {
+    return await axios.get(`${url}/search/shows?q=${query}`)
+  }
+  const getData = async () => {
+    const { data } = await getShows(query)
+    setShows(data)
+  }
+
+  useEffect(() => {
+    getData()
+  }, [query])
+
+  console.log(shows)
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    setQuery(searchRef.current.value)
     console.log(searchRef.current.value)
   }
+
   return (
     <>
       <nav className='bg-gray-800 h-20'>
